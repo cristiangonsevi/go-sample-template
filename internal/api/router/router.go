@@ -10,7 +10,7 @@ import (
 )
 
 func NewRouter() http.Handler {
-	// Configurar rutas con Gorilla Mux
+	// Configure routes
 	router := mux.NewRouter()
 
 	userRepository := repository.NewUserRepositoryImpl()
@@ -18,10 +18,10 @@ func NewRouter() http.Handler {
 	userHandler := handler.NewUserHandler(userService)
 
 	router.HandleFunc("/users", userHandler.GetUsers).Methods("GET")
-	// router.HandleFunc("/users/{id}", handler.GetUser()).Methods("GET")
-	// router.HandleFunc("/users", handler.AddUser()).Methods("POST")
-	// router.HandleFunc("/users/{id}", handler.UpdateUser()).Methods("PUT")
-	// router.HandleFunc("/users/{id}", handler.DeleteUser()).Methods("DELETE")
+	router.HandleFunc("/users/{id}", userHandler.GetUser).Methods("GET")
+	router.HandleFunc("/users", userHandler.AddUser).Methods("POST")
+	router.HandleFunc("/users/{id}", userHandler.UpdateUser).Methods("PUT")
+	router.HandleFunc("/users/{id}", userHandler.DeleteUser).Methods("DELETE")
 
 	return router
 }
